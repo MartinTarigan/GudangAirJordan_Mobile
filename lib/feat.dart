@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({Key? key}) : super(key: key);
 
-  final List<ShopItem> items = [
-    ShopItem("Lihat Item", Icons.search),
-    ShopItem("Tambah Item", Icons.add_box_rounded),
-    ShopItem("Logout", Icons.logout_rounded),
+  static const List<ShopItem> items = [
+    ShopItem("Lihat Item", Icons.search, Color(0xFF8284ac)),
+    ShopItem("Tambah Item", Icons.add_box_rounded, Color(0xFF53558c)),
+    ShopItem("Logout", Icons.logout_rounded, Color(0xFF2f3169)),
   ];
 
   @override
@@ -15,40 +15,31 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "GudangAirJordan",
-          style: TextStyle(
-            color: Colors.white
-          ),
+          style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF1F1D2B),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-                child: Text(
-                  'Feature',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Text(
+                'Feature',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
-                height: 300,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: items.length,
-                  itemBuilder: (context, i) {
-                    return ShopCard(items[i]);
-                  },
-                ),
+            ),
+            SizedBox(
+              height: 300,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: items.length,
+                itemBuilder: (context, i) => ShopCard(items[i]),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -58,8 +49,9 @@ class MyHomePage extends StatelessWidget {
 class ShopItem {
   final String name;
   final IconData icon;
+  final Color color;
 
-  ShopItem(this.name, this.icon);
+  const ShopItem(this.name, this.icon, this.color);
 }
 
 class ShopCard extends StatelessWidget {
@@ -74,32 +66,20 @@ class ShopCard extends StatelessWidget {
       child: Container(
         width: 240,
         decoration: BoxDecoration(
-          color: const Color(0xFF6C5ECF),
-          borderRadius: BorderRadius.circular(10), // Menambahkan border radius
+          color: item.color,
+          borderRadius: BorderRadius.circular(10),
         ),
         child: InkWell(
-          onTap: () {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(SnackBar(
-                  content: Text("Kamu telah menekan tombol ${item.name}")));
-          },
+          onTap: () => ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Kamu telah menekan tombol ${item.name}")),
+          ),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  item.icon,
-                  size: 50,
-                  color: Colors.white,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  item.name,
-                  style: const TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-              ]
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(item.icon, size: 50, color: Colors.white),
+              const SizedBox(height: 10),
+              Text(item.name, style: const TextStyle(fontSize: 30)),
+            ],
           ),
         ),
       ),
