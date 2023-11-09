@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gudang_air_jordan/feat.dart';
+import 'package:gudang_air_jordan/screens/feat.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
           )
         ),
         useMaterial3: true, 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white)
         .copyWith(background: const Color(0xFF1F1D2B)),
       ),
-      home: DashboardPage(),
+      home: const DashboardPage(),
     );
   }
 }

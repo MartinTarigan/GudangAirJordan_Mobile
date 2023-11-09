@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gudang_air_jordan/screens/add_form.dart';
+import 'package:gudang_air_jordan/widgets/nav_drawer.dart';
+import 'package:gudang_air_jordan/screens/list_item.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -18,11 +21,14 @@ class DashboardPage extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF1F1D2B),
+        foregroundColor: Colors.white,
       ),
+      drawer: const NavDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
+            const Center(),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
@@ -70,9 +76,24 @@ class ShopCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: InkWell(
-          onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Kamu telah menekan tombol ${item.name}")),
-          ),
+          onTap: () {
+            if (item.name == "Tambah Item") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AddFormPage()),
+              );
+            } else if (item.name == "Lihat Item") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ListItem()),
+              );
+            } else {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(SnackBar(
+                    content: Text("Kamu telah menekan tombol ${item.name}!")));
+            }
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
