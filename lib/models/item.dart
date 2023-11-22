@@ -30,7 +30,6 @@ class AirJordan {
 
 class Fields {
     int user;
-    int userID;
     String name;
     int amount;
     String description;
@@ -41,7 +40,6 @@ class Fields {
 
     Fields({
         required this.user,
-        required this.userID,
         required this.name,
         required this.amount,
         required this.description,
@@ -53,7 +51,6 @@ class Fields {
 
     factory Fields.fromJson(Map<String, dynamic> json) => Fields(
         user: json["user"],
-        userID: json["user_id"],
         name: json["name"],
         amount: json["amount"],
         description: json["description"],
