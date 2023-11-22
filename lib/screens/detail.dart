@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:gudang_air_jordan/widgets/item.dart';
+import 'package:gudang_air_jordan/models/item.dart';
 
-class ListItem extends StatelessWidget {
-  const ListItem({Key? key}) : super(key: key);
+class Detail extends StatelessWidget {
+  final AirJordan item;
+
+  const Detail(this.item, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "List Item",
+          "Detail Item",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF2f3169),
@@ -18,14 +20,7 @@ class ListItem extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(50.0),
-          child: Column(
-            children: listItem.map((Item item) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 20.0),
-                child: ItemCard(item),
-              );
-            }).toList(),
-          ),
+          child: ItemCard(item.fields),
         ),
       ),
     );
@@ -33,7 +28,7 @@ class ListItem extends StatelessWidget {
 }
 
 class ItemCard extends StatelessWidget {
-  final Item item;
+  final Fields item;
 
   const ItemCard(this.item, {super.key});
 
@@ -44,12 +39,11 @@ class ItemCard extends StatelessWidget {
       child: Material(
         color: const Color(0xFF53558c),
         child: InkWell(
-          onTap: () {
-            return;
-          },
+          onTap: () {},
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.network(item.image),
+              Image.network(item.linkImage),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
@@ -65,6 +59,7 @@ class ItemCard extends StatelessWidget {
                             item.name,
                             style: const TextStyle(color: Colors.white),
                           ),
+                          const SizedBox(height: 5,),
                           Text(
                             "Rp${item.price.toString()}",
                             textAlign: TextAlign.center,
@@ -85,10 +80,29 @@ class ItemCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 300, child: Text(item.description)),
-              const SizedBox(
-                height: 20,
-              )
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Description:"),
+                    const SizedBox(height: 5,),
+                    SizedBox(width: 300, child: Text(item.description)),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(width: 300, child: Text("Category: ${item.category}")),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(width: 300, child: Text("Stored date: ${item.dateAdded.toString().split(' ')[0]}")),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+      
             ],
           ),
         ),

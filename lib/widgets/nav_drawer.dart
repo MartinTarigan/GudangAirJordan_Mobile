@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gudang_air_jordan/screens/add_form.dart';
+import 'package:gudang_air_jordan/screens/dj_item_all.dart';
+import 'package:gudang_air_jordan/screens/dj_item_user.dart';
 import 'package:gudang_air_jordan/screens/feat.dart';
 import 'package:gudang_air_jordan/screens/list_item.dart';
-
 
 class NavDrawer extends StatelessWidget {
   const NavDrawer({super.key});
@@ -89,6 +90,40 @@ class NavDrawer extends StatelessWidget {
               ),
             ),
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const ListItem()))
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.shopping_basket,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Daftar Item',
+              style: TextStyle(
+                color: Colors.white
+              ),
+            ),
+            onTap: () =>
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ItemPage()),
+              )
+          ),
+          ListTile(
+            leading: const Icon(
+              Icons.shopping_basket,
+              color: Colors.white,
+            ),
+            title: const Text(
+              'Daftar Item User',
+              style: TextStyle(
+                color: Colors.white
+              ),
+            ),
+            onTap: () =>
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const UserItemPage()),
+              )
           ),
         ],
       ),

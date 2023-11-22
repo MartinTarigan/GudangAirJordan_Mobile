@@ -1,6 +1,6 @@
-List<AirJordan> listItem = [];
+List<Item> listItem = [];
 
-class AirJordan {
+class Item {
   final String name;
   final int amount;
   final String description;
@@ -8,6 +8,6 @@ class AirJordan {
   final int price;
   final String image;
 
-  AirJordan(this.name, this.amount, this.description, this.category, this.price,
+  Item(this.name, this.amount, this.description, this.category, this.price,
       this.image);
 }

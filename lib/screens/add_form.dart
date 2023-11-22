@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gudang_air_jordan/screens/feat.dart';
 import 'package:gudang_air_jordan/widgets/item.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class AddFormPage extends StatefulWidget {
   const AddFormPage({super.key});
@@ -20,6 +23,8 @@ class _AddFormPageState extends State<AddFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -196,9 +201,57 @@ class _AddFormPageState extends State<AddFormPage> {
                       backgroundColor:
                           MaterialStateProperty.all(const Color(0xFF8284ac)),
                     ),
+                    onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                            // Kirim ke Django dan tunggu respons
+                            final response = await request.postJson(
+                            "https://martin-marcelino-tugas.pbp.cs.ui.ac.id/create-flutter/",
+                            jsonEncode(<String, String>{
+                                'name': _name,
+                                'amount': _amount.toString(),
+                                'description': _description,
+                                'category': _category,
+                                'price': _price.toString(),
+                                'img': _image,
+                            }));
+                            if (response['status'] == 'success') {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                content: Text("Produk baru berhasil disimpan!"),
+                                ));
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const DashboardPage()),
+                                );
+                            } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                    content:
+                                        Text("Terdapat kesalahan, silakan coba lagi."),
+                                ));
+                            }
+                        }
+                    },
+                    child: const Text(
+                      "Save DJ",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20.0,),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0xFF8284ac)),
+                    ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        listItem.add(AirJordan(_name, _amount, _description,
+                        listItem.add(Item(_name, _amount, _description,
                             _category, _price, _image));
                         showDialog(
                             context: context,
